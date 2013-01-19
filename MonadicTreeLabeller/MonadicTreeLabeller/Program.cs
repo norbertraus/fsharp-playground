@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MonadicTreeLabeler
+﻿namespace MonadicTreeLabeller
 {
     class Program
     {
@@ -11,10 +7,10 @@ namespace MonadicTreeLabeler
             var tree = Build();
             tree.Show();
 
-            var labeledTree = new Labeler().Label(tree);
+            var labeledTree = new Labeller().Label(tree);
             labeledTree.Show();
 
-            var labeledWithMonads = new MonadicLabeler().Label(tree);
+            var labeledWithMonads = new MonadicLabeller().Label(tree);
             labeledWithMonads.Show();
         }
 

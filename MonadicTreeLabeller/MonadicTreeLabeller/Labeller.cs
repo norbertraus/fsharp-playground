@@ -1,19 +1,19 @@
 ﻿using System;
 
-namespace MonadicTreeLabeler
+namespace MonadicTreeLabeller
 {
-    public class Labeler
+    public class Labeller
     {
         public Node<Tuple<int, string>> Label(Node<string> root)
         {
-            Func<Node<string>, int, Tuple<Node<Tuple<int, string>>, int>> labeler = null;
-            labeler = (node, label) =>
+            Func<Node<string>, int, Tuple<Node<Tuple<int, string>>, int>> labeller = null;
+            labeller = (node, label) =>
             {
                 int nextLabel = label + 1;
                 Node<Tuple<int, string>> left = null;
                 if(node.Left != null)
                 {
-                    var leftLabeled = labeler(node.Left, nextLabel);
+                    var leftLabeled = labeller(node.Left, nextLabel);
                     left = leftLabeled.Item1;
                     nextLabel = leftLabeled.Item2;
                 }
@@ -21,7 +21,7 @@ namespace MonadicTreeLabeler
                 Node<Tuple<int, string>> right = null;
                 if(node.Right != null)
                 {
-                    var rightLabeled = labeler(node.Right, nextLabel);
+                    var rightLabeled = labeller(node.Right, nextLabel);
                     right = rightLabeled.Item1;
                     nextLabel = rightLabeled.Item2;
                 }
@@ -31,7 +31,7 @@ namespace MonadicTreeLabeler
                     nextLabel);
             };
 
-            return labeler(root, 0).Item1;
+            return labeller(root, 0).Item1;
         }
     }
 }

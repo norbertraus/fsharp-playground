@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonadicTreeLabeler
+namespace MonadicTreeLabeller
 {
     public class StateMonad<State, Content>
     {

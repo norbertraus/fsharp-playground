@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MonadicTreeLabeler
+namespace MonadicTreeLabeller
 {
-    public class MonadicLabeler
+    public class MonadicLabeller
     {
         public Node<Tuple<int, string>> Label(Node<string> root)
         {

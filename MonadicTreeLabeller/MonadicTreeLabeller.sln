@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadicTreeLabeler", "MonadicTreeLabeler\MonadicTreeLabeler.csproj", "{E7830072-3B11-4122-AC40-2D25A4D3D474}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadicTreeLabeller", "MonadicTreeLabeller\MonadicTreeLabeller.csproj", "{E7830072-3B11-4122-AC40-2D25A4D3D474}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MonadicTreeLabellerFSharp", "MonadicTreeLabellerFSharp\MonadicTreeLabellerFSharp.fsproj", "{B85C5167-4A74-48CD-BC87-A0391CA10D3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{E7830072-3B11-4122-AC40-2D25A4D3D474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7830072-3B11-4122-AC40-2D25A4D3D474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7830072-3B11-4122-AC40-2D25A4D3D474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B85C5167-4A74-48CD-BC87-A0391CA10D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B85C5167-4A74-48CD-BC87-A0391CA10D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B85C5167-4A74-48CD-BC87-A0391CA10D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B85C5167-4A74-48CD-BC87-A0391CA10D3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
