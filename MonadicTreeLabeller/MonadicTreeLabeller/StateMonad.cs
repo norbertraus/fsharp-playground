@@ -33,4 +33,65 @@ namespace MonadicTreeLabeller
             });
         }
     }
+
+
+
+    //public delegate StateContentPair<T> StateMonad<T>(int state);
+
+    //public static class LinqStateMonad
+    //{
+    //    public static StateMonad<U> Select<T, U>(this StateMonad<T> p, Func<T, U> selector)
+    //    {
+    //        return state => new StateContentPair<U>(selector(p(state).Content), state);
+    //    }
+    //    public static StateMonad<V> SelectMany<T, U, V>(this StateMonad<T> p, Func<T, StateMonad<U>> selector, Func<T, U, V> projector)
+    //    {
+    //        return state =>
+    //        {
+    //            var first = p(state);
+    //            var second = selector(first.Content)(first.State);
+    //            var content = projector(first.Content, second.Content);
+    //            return new StateContentPair<V>(content, second.State);
+    //        };
+    //    }
+
+    //    public static StateMonad<int> GetState()
+    //    {
+    //        return s => new StateContentPair<int>(s, s);
+    //    }
+
+    //    public static StateMonad<T> SetState<T>(int s1)
+    //    {
+    //        return s => new StateContentPair<T>(default(T), s1);
+    //    }
+    //}
+
+    
+////LINQ Monadic Labelling of a Binary Tree
+
+//public static StateMonad<BTree> MLabel(BTree tree)
+//{
+//    var branch = tree as BBranch;
+//    var leaf = tree as BLeaf;
+
+//    StateMonad<BTree> ret = null;
+
+//    if (leaf != null)
+//    {
+//        var q = from x in LinqStateMonad.GetState()
+//                from f in LinqStateMonad.SetState<int>(x + 1)
+//                select new BLeaf { Content = leaf.Content, State = x };
+//        ret = s => { var r = q(s); return new StateContentPair<BTree>(r.Content, r.State); };
+//    }
+
+//    if (branch != null)
+//    {
+//        var q = from l in MLabel(branch.Left)
+//                from r in MLabel(branch.Right)
+//                select new BBranch() { Left = l, Right = r };
+//        ret = s => { var r = q(s); return new StateContentPair<BTree>(r.Content, r.State); };
+//    }
+
+//    return ret;
+//}
 }

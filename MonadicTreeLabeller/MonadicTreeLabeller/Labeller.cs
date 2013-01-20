@@ -4,11 +4,16 @@ namespace MonadicTreeLabeller
 {
     public class Labeller
     {
+        /// <summary>
+        /// Passes around the current state of the label
+        /// </summary>
         public Node<Tuple<int, string>> Label(Node<string> root)
         {
             Func<Node<string>, int, Tuple<Node<Tuple<int, string>>, int>> labeller = null;
             labeller = (node, label) =>
             {
+                //in order to remove all side effect we need to rewrite this with 4 conditions as with monadic labeller
+
                 int nextLabel = label + 1;
                 Node<Tuple<int, string>> left = null;
                 if(node.Left != null)
