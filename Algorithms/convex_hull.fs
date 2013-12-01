@@ -1,4 +1,11 @@
 ﻿module convexhull
+
+//#r "System";;
+//#r "System.Xaml.dll";;
+//#r "PresentationCore.dll";;
+//#r "PresentationFramework.dll";;
+//#r "WindowsBase.dll";;
+
 open System
 open System.Windows
 
@@ -39,15 +46,24 @@ let hull (points: Point2D list) =
   hull' sorted []
 
 module UI =
+  
   open System.Windows
   
-  let points = [| for x,y in [1.0,1.0; 3.0,3.0; 4.0,6.0; 10.0,8.0; 9.0,14.0; 7.0,17.0; 5.0,15.0; 4.0,12.0; 2.0,13.0; 3.0,9.0] -> {X=x;Y=y}|]
+  //let points = [| for x,y in [1.0,1.0; 3.0,3.0; 4.0,6.0; 10.0,8.0; 9.0,14.0; 7.0,17.0; 5.0,15.0; 4.0,12.0; 2.0,13.0; 3.0,9.0] -> {X=x;Y=y}|]
 
+  let pts =
+        let rand = System.Random()
+        [|for _ in 1..100 do
+            let x, y = rand.NextDouble(), rand.NextDouble()
+            if (x - 0.5) ** 2.0 + (y - 0.5) ** 2.0 < 0.25 then
+              yield 300. * Vector(x, y) + Vector(100., 100.)|]
+
+  let points = [| for v in pts -> {X=v.X;Y=v.Y}|]
   let drag : int option ref = ref None
   let size = 5.0
 
   //draw ellipse
-  let createEllipse i =
+  let createEllipse i _ =
     let ellipse = Shapes.Ellipse(Fill=Media.Brushes.Red, Width=size, Height=size)
     ellipse.MouseDown.Add(fun e -> drag := Some i)
     ellipse.MouseUp.Add(fun e -> drag := None)
@@ -70,6 +86,20 @@ module UI =
     poly.Points.Clear()
 
     points |> Array.toList |> hull |> List.iter (fun p -> poly.Points.Add(point(p)))
+
+  [<System.STAThread>]
+  let run =
+     do
+        let canvas = Controls.Canvas(Width=500.0, Height=500.0, Background=Media.Brushes.White)
+        let polygon = Shapes.Polygon(Stroke=Media.Brushes.Black, StrokeThickness=1.0)
+        polygon |> canvas.Children.Add |> ignore
+        let ellipses = points |> Array.mapi createEllipse
+        Seq.iter (canvas.Children.Add >> ignore) ellipses
+        let update = update polygon ellipses
+        canvas.MouseMove.Add(move canvas update)
+        Seq.iter update [0..points.Length-1]
+        let canvas = Controls.Viewbox(Child=canvas, Stretch=Media.Stretch.Uniform)
+        Window(Content=canvas, Title="Convex hull") |> Application().Run |> ignore;;
 
 module testing =
 
@@ -119,4 +149,3 @@ module testing =
   [<Test>]
   let should_trun_left_9() =
     Assert.That(turn {X=2.0;Y=13.0} {X=3.0;Y=9.0} {X=1.0;Y=1.0}, Is.EqualTo(Right))
-   
