@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="convex_hull.fs" />
     <None Include="packages.config" />
+    <Compile Include="agents.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
