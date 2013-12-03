@@ -1,11 +1,13 @@
 ﻿module bounded_queue
 
+type Agent<'T> = MailboxProcessor<'T>
+
+#region "WebCrawler"
+
 open System.Text.RegularExpressions
 open System.Threading
 open System.Net
 open System.IO
-
-type Agent<'T> = MailboxProcessor<'T>
 
 let limit = 50
 let linkPattern = "href=\s*\"[^\"h]*(http://[^&\"]*)\""
@@ -72,9 +74,9 @@ let urlCollector =
           return! waitForUrl(visited.Add(url)) }
 
     waitForUrl(Set.empty))
-    
-
-
+   
+#endregion
+  
 #region "Play"
 //let counter1 = 
 //  new Agent<_>(fun inbox -> 

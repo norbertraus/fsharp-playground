@@ -16,17 +16,6 @@ type Turn =
 [<System.Diagnostics.DebuggerDisplay("x={X}, y={Y}")>]
 type Point2D = { X:double; Y:double }
 
-//translates from radians to degrees between 0-360
-let degree r = 
-  let angle = r * (180.0 / Math.PI)
-  if angle > 0.0 then angle else 360.0 + angle
-
-let turn (x:Point2D) (y:Point2D) (z:Point2D) =
-  let xy_angle = Math.Atan2((y.Y - x.Y), (y.X - x.X))
-  let yz_angle = Math.Atan2((z.Y - y.Y), (z.X - y.X))
-       
-  if degree yz_angle >= degree xy_angle then Left else Right
-
 let ccw (a:Point2D) (b:Point2D) (c:Point2D) =
   let det = (b.X-a.X)*(c.Y-a.Y) - (b.Y-a.Y)*(c.X-a.X)
   if det > 0. then 1
@@ -36,7 +25,7 @@ let ccw (a:Point2D) (b:Point2D) (c:Point2D) =
 //computes determinant of the two vectors xy and zx.
 //if the det is zero then the vectors are colinear, 
 //if det is greater than zero the turn is left otherwise the turn is right
-let turn2 (x:Point2D) (y:Point2D) (z:Point2D) =
+let turn (x:Point2D) (y:Point2D) (z:Point2D) =
   match ccw x y z with
   | c when c = 0 -> Left 
   | c when c = 1 -> Left
@@ -262,44 +251,44 @@ module testing =
   [<Test>]
   let should_turn_left_1() =
     Assert.That(turn {X=1.0;Y=1.0} {X=3.0;Y=3.0} {X=4.0;Y=6.0}, Is.EqualTo(Left))
-    Assert.That(turn2 {X=1.0;Y=1.0} {X=3.0;Y=3.0} {X=4.0;Y=6.0}, Is.EqualTo(Left))
+    Assert.That(turn {X=1.0;Y=1.0} {X=3.0;Y=3.0} {X=4.0;Y=6.0}, Is.EqualTo(Left))
     
   [<Test>]
   let should_turn_right_2() =
     Assert.That(turn {X=3.0;Y=3.0} {X=4.0;Y=6.0} {X=10.0;Y=8.0}, Is.EqualTo(Right))  
-    Assert.That(turn2 {X=3.0;Y=3.0} {X=4.0;Y=6.0} {X=10.0;Y=8.0}, Is.EqualTo(Right))  
+    Assert.That(turn {X=3.0;Y=3.0} {X=4.0;Y=6.0} {X=10.0;Y=8.0}, Is.EqualTo(Right))  
 
   [<Test>]
   let should_turn_left_3() =
     Assert.That(turn {X=4.0;Y=6.0} {X=10.0;Y=8.0} {X=9.0;Y=14.0}, Is.EqualTo(Left))  
-    Assert.That(turn2 {X=4.0;Y=6.0} {X=10.0;Y=8.0} {X=9.0;Y=14.0}, Is.EqualTo(Left))  
+    Assert.That(turn {X=4.0;Y=6.0} {X=10.0;Y=8.0} {X=9.0;Y=14.0}, Is.EqualTo(Left))  
 
   [<Test>]
   let should_turn_left_4() =
     Assert.That(turn {X=10.0;Y=8.0} {X=9.0;Y=14.0} {X=7.0;Y=17.0}, Is.EqualTo(Left))  
-    Assert.That(turn2 {X=10.0;Y=8.0} {X=9.0;Y=14.0} {X=7.0;Y=17.0}, Is.EqualTo(Left))  
+    Assert.That(turn {X=10.0;Y=8.0} {X=9.0;Y=14.0} {X=7.0;Y=17.0}, Is.EqualTo(Left))  
   
   [<Test>]
   let should_turn_left_5() =
     Assert.That(turn {X=9.0;Y=14.0} {X=7.0;Y=17.0} {X=5.0;Y=15.0}, Is.EqualTo(Left))  
-    Assert.That(turn2 {X=9.0;Y=14.0} {X=7.0;Y=17.0} {X=5.0;Y=15.0}, Is.EqualTo(Left))  
+    Assert.That(turn {X=9.0;Y=14.0} {X=7.0;Y=17.0} {X=5.0;Y=15.0}, Is.EqualTo(Left))  
   
   [<Test>]
   let should_turn_left_6() =
     Assert.That(turn {X=7.0;Y=17.0} {X=5.0;Y=15.0} {X=4.0;Y=12.0}, Is.EqualTo(Left))
-    Assert.That(turn2 {X=7.0;Y=17.0} {X=5.0;Y=15.0} {X=4.0;Y=12.0}, Is.EqualTo(Left))
+    Assert.That(turn {X=7.0;Y=17.0} {X=5.0;Y=15.0} {X=4.0;Y=12.0}, Is.EqualTo(Left))
 
   [<Test>]
   let should_turn_right_7() =
     Assert.That(turn {X=5.0;Y=15.0} {X=4.0;Y=12.0} {X=2.0;Y=13.0}, Is.EqualTo(Right))
-    Assert.That(turn2 {X=5.0;Y=15.0} {X=4.0;Y=12.0} {X=2.0;Y=13.0}, Is.EqualTo(Right))
+    Assert.That(turn {X=5.0;Y=15.0} {X=4.0;Y=12.0} {X=2.0;Y=13.0}, Is.EqualTo(Right))
 
   [<Test>]
   let should_trun_left_8() =
     Assert.That(turn {X=4.0;Y=12.0} {X=2.0;Y=13.0} {X=3.0;Y=9.0}, Is.EqualTo(Left))
-    Assert.That(turn2 {X=4.0;Y=12.0} {X=2.0;Y=13.0} {X=3.0;Y=9.0}, Is.EqualTo(Left))
+    Assert.That(turn {X=4.0;Y=12.0} {X=2.0;Y=13.0} {X=3.0;Y=9.0}, Is.EqualTo(Left))
    
   [<Test>]
   let should_trun_left_9() =
     Assert.That(turn {X=2.0;Y=13.0} {X=3.0;Y=9.0} {X=1.0;Y=1.0}, Is.EqualTo(Right))
-    Assert.That(turn2 {X=2.0;Y=13.0} {X=3.0;Y=9.0} {X=1.0;Y=1.0}, Is.EqualTo(Right))
+    Assert.That(turn {X=2.0;Y=13.0} {X=3.0;Y=9.0} {X=1.0;Y=1.0}, Is.EqualTo(Right))
